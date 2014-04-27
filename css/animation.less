@@ -1,0 +1,22 @@
+@normal-speed: 1s;
+
+.animated{
+	animation-fill-mode: forwards;
+	animation-duration: @normal-speed;
+}
+
+
+.fade-in-down {
+	animation-name: fade-in-down;
+}
+
+@keyframes fade-in-down {
+	from {
+		opacity: 0;
+		transform: translate3d(0,-50px,0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0,0,0);
+	}
+}

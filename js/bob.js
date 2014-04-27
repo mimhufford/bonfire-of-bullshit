@@ -4,12 +4,13 @@ var BonfireOfBullshit = (function()
 	var my = {};
 
 	// private vars
-	var allPhotos = [];
-	var matchPhotos = [];
+	var burnBtn = $("#burn");
+	var searchCtrls = $("#search");
 
 	// public functions
 	my.init = function()
 	{
+		searchCtrls.toggle(false);	
 		bindUIActions();
 	}
 
@@ -20,9 +21,10 @@ var BonfireOfBullshit = (function()
 
 	my.populateSearch = function(victims)
 	{
-		$("#search").toggle(true);
+		searchCtrls.toggle(true);
+		searchCtrls.addClass("animated");
+		searchCtrls.addClass("fade-in-down");
 
-		var burnBtn = $("#burn");
 
 		// make a value property so autocomeplete works without a ton of modding
 		$.each(victims, function(index, victim)
