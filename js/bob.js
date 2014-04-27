@@ -47,9 +47,17 @@ var BonfireOfBullshit = (function()
 
 	my.startBonfire = function()
 	{
-		var photos = Facebook.getPhotosContaining($("#victim-id").val());
+		var victimID = $("#victim-id").val();
+
+		var statuses = Facebook.getStatusesContaining(victimID);
+		var photos = Facebook.getPhotosContaining(victimID);
 
 		$("#friends").empty();
+
+		$.each(statuses, function(index, status)
+		{
+			$("#friends").append(status + "<br/>");
+		});
 
 		$.each(photos, function(index, photo)
 		{

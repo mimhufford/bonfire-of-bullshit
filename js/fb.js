@@ -6,6 +6,7 @@ var Facebook = (function()
     // private vars
     var friends;
     var photos;
+    var statuses;
 
     // public functions
     my.init = function()
@@ -25,6 +26,7 @@ var Facebook = (function()
                 BonfireOfBullshit.connected();
                 getFriends();
                 getPhotos();
+                getStatuses();
             }
           });
         };
@@ -41,7 +43,7 @@ var Facebook = (function()
         {
             $.each(photo.tags.data, function(index, tag)    // TODO tags paging?
             {
-                if(tag.id == friendID)
+                if(tag.id === friendID)
                 {
                     photosOfBoth.push(photo.source);
                     return false;
@@ -50,6 +52,32 @@ var Facebook = (function()
         });
 
         return photosOfBoth;
+    }
+
+    my.getStatusesContaining = function(friendID)
+    {
+        var statusesWithBoth = [];
+
+        $.each(statuses, function(index, status)
+        {
+            if (status.from.id === friendID)
+            {
+                statusesWithBoth.push(status.message || status.story);
+            }
+            else if(status.with_tags)
+            {
+                $.each(status.with_tags.data, function(index, tagged)
+                {
+                    if (tagged.id === friendID)
+                    {
+                        statusesWithBoth.push(status.message || status.story)
+                        return false;
+                    }
+                });
+            }
+        });
+
+        return statusesWithBoth;
     }
 
     // private functions
@@ -67,6 +95,14 @@ var Facebook = (function()
         getData('/me/photos', function(data)
         {
             photos = data;
+        });
+    }
+
+    function getStatuses()
+    {
+        getData('/me/tagged', function(data)
+        {
+            statuses = data;
         });
     }
 
