@@ -1,0 +1,2 @@
+BonfireOfBullshit.init();
+Facebook.init();
